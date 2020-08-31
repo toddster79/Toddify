@@ -13,6 +13,20 @@
             $this->validateLastName($ln);
             $this->validateEmails($em, $em2);
             $this->validatePasswords($pw, $pw2);
+
+            if(empty($this->errorArray) == true) {
+                //Insert into DB
+                return true;
+            } else {
+                return false;
+            }
+        } 
+
+        public function getError($error) {
+            if(!in_array($error, $this->errorArray)) {
+                $error = "";
+            }
+            return "<span class='errorMessage'>$error</span>";
         }
 
         private function validateUsername($un) {
@@ -38,7 +52,7 @@
         } 
     
         private function validateEmails($em, $em2) {
-            if(em != em2) {
+            if($em != $em2) {
                 array_push($this->errorArray, "Your emails don't match");
                 return;
 
@@ -52,7 +66,7 @@
         }
     
         private function validatePasswords($pw, $pw2) {
-            if(pw != pw2) {
+            if($pw != $pw2) {
                 array_push($this->errorArray, "Your passwords don't match");
                 return;
 
@@ -64,7 +78,7 @@
             }
 
             if(strlen($pw) > 30 || strlen($pw) < 5) {
-                array_push($this->errorArray, "Your password must be between 5 30 characters");
+                array_push($this->errorArray, "Your password must be between 5 and 30 characters");
                 return;
             }
     
